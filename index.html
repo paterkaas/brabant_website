@@ -1,0 +1,154 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Brabant Family Escapes | Safe & Hassle-Free</title>
+    
+    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" />
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600&display=swap" rel="stylesheet">
+    
+    <style>
+        :root { --primary-green: #5B8A72; --light-green: #E8F0EC; --background-cream: #FDFBF7; --text-dark: #2C3E38; --text-muted: #5A7065; --accent-blue: #4A90E2; --shadow: 0 4px 12px rgba(0,0,0,0.08); }
+        * { box-sizing: border-box; margin: 0; padding: 0; font-family: 'Inter', sans-serif; }
+        body { display: flex; height: 100vh; background-color: var(--background-cream); color: var(--text-dark); overflow: hidden; }
+
+        /* UI Styles */
+        .sidebar { width: 340px; background: #ffffff; padding: 24px; display: flex; flex-direction: column; box-shadow: var(--shadow); z-index: 10; overflow-y: auto; }
+        .logo-area { margin-bottom: 24px; }
+        .logo-area h1 { font-size: 1.4rem; color: var(--primary-green); font-weight: 600; }
+        .logo-area p { font-size: 0.9rem; color: var(--text-muted); margin-top: 4px; }
+        .filter-section { margin-bottom: 24px; padding-bottom: 24px; border-bottom: 1px solid var(--light-green); }
+        .filter-section h3 { font-size: 1rem; margin-bottom: 12px; }
+        .filter-label { display: flex; align-items: center; margin-bottom: 10px; font-size: 0.95rem; cursor: pointer; }
+        .filter-label input { margin-right: 10px; accent-color: var(--primary-green); }
+        .price-display { font-weight: 600; color: var(--primary-green); margin-bottom: 8px; display: block; }
+        input[type=range] { width: 100%; accent-color: var(--primary-green); }
+
+        .map-container { flex-grow: 1; position: relative; }
+        #map { height: 100%; width: 100%; }
+
+        .info-panel { position: absolute; top: 20px; right: -400px; width: 360px; max-height: 90vh; background: white; border-radius: 12px; box-shadow: var(--shadow); z-index: 1000; padding: 24px; transition: right 0.3s ease; overflow-y: auto; }
+        .info-panel.active { right: 20px; }
+        .close-btn { position: absolute; top: 16px; right: 16px; background: none; border: none; font-size: 1.2rem; cursor: pointer; color: var(--text-muted); }
+        .park-title { font-size: 1.3rem; color: var(--primary-green); margin-bottom: 8px; padding-right: 20px; }
+        
+        .travel-logistics { background: var(--light-green); padding: 12px; border-radius: 8px; margin-bottom: 16px; font-size: 0.9rem; }
+        .travel-logistics strong { color: var(--primary-green); }
+        
+        .book-btn { display: block; background-color: var(--accent-blue); color: white; text-decoration: none; text-align: center; padding: 12px; border-radius: 8px; font-weight: 600; margin-bottom: 20px; transition: background-color 0.2s ease, transform 0.1s ease; }
+        .book-btn:hover { background-color: #3a7bc2; }
+
+        .review-card { background: var(--background-cream); padding: 12px; border-radius: 8px; margin-bottom: 12px; font-size: 0.9rem; line-height: 1.4; border-left: 3px solid var(--accent-blue); }
+        .trust-word { background-color: #d1e7dd; padding: 2px 4px; border-radius: 4px; font-weight: 600; color: #0f5132; }
+
+        .chatbot-widget { position: fixed; bottom: 20px; right: 20px; z-index: 2000; display: flex; flex-direction: column; align-items: flex-end; }
+        .chat-window { width: 320px; background: white; border-radius: 12px; box-shadow: var(--shadow); margin-bottom: 16px; display: none; overflow: hidden; border: 1px solid var(--light-green); }
+        .chat-window.active { display: block; }
+        .chat-header { background: var(--primary-green); color: white; padding: 16px; font-weight: 600; display: flex; justify-content: space-between; align-items: center; }
+        .chat-body { padding: 16px; height: 200px; overflow-y: auto; background: var(--background-cream); }
+        .bot-message { background: white; padding: 12px; border-radius: 8px 8px 8px 0; font-size: 0.9rem; line-height: 1.4; box-shadow: 0 2px 4px rgba(0,0,0,0.04); color: var(--text-dark); }
+        .chat-input { display: flex; border-top: 1px solid #eee; }
+        .chat-input input { flex-grow: 1; padding: 12px; border: none; outline: none; }
+        .chat-input button { background: var(--primary-green); color: white; border: none; padding: 0 16px; cursor: pointer; }
+        .chat-toggle { width: 60px; height: 60px; background: var(--primary-green); color: white; border-radius: 50%; display: flex; justify-content: center; align-items: center; font-size: 1.5rem; cursor: pointer; box-shadow: var(--shadow); border: none; transition: transform 0.2s; }
+
+        @media (max-width: 768px) {
+            body { flex-direction: column; }
+            .sidebar { width: 100%; height: 40vh; padding: 16px; }
+            .info-panel { right: 0; top: auto; bottom: -100%; width: 100%; border-radius: 12px 12px 0 0; transition: bottom 0.3s ease; }
+            .info-panel.active { bottom: 0; right: auto; }
+        }
+    </style>
+</head>
+<body>
+
+    <aside class="sidebar">
+        <div class="logo-area">
+            <h1>Brabant Family Escapes</h1>
+            <p>Safe, stress-free holidays in the Netherlands</p>
+        </div>
+        <div class="filter-section">
+            <h3>Budget (Per Week)</h3>
+            <span class="price-display">Up to £<span id="priceValue">800</span></span>
+            <input type="range" id="priceRange" min="300" max="1500" value="800" step="50">
+        </div>
+    </aside>
+
+    <main class="map-container">
+        <div id="map"></div>
+        <div class="info-panel" id="infoPanel">
+            <button class="close-btn" onclick="closePanel()">✕</button>
+            <h2 class="park-title" id="parkName">Park Name</h2>
+            <div class="travel-logistics" id="parkLogistics"></div>
+            <a href="#" id="parkLink" class="book-btn" target="_blank" rel="noopener noreferrer">Visit Official Website ↗</a>
+            <h3 style="font-size: 1rem; margin-bottom: 12px;">What UK Families Say</h3>
+            <div id="parkReviews"></div>
+        </div>
+    </main>
+
+    <div class="chatbot-widget">
+        <div class="chat-window" id="chatWindow">
+            <div class="chat-header">Local Guide Anna 🇳🇱<button onclick="toggleChat()" style="background:none;border:none;color:white;cursor:pointer;">✕</button></div>
+            <div class="chat-body"><div class="bot-message">Hi there! 👋 How can I help you plan your hassle-free trip?</div></div>
+            <div class="chat-input"><input type="text" placeholder="Type your question..."><button>→</button></div>
+        </div>
+        <button class="chat-toggle" onclick="toggleChat()">💬</button>
+    </div>
+
+    <!-- 1. Load Leaflet Map Library -->
+    <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
+    
+    <!-- 2. NEW: Load Your External Data File -->
+    <script src="parks-data.js"></script>
+    
+    <!-- 3. Your Map Logic -->
+    <script>
+        const priceRange = document.getElementById('priceRange');
+        const priceValue = document.getElementById('priceValue');
+        priceRange.addEventListener('input', function() { priceValue.textContent = this.value; });
+
+        const brabantBounds = L.latLngBounds([51.22, 4.20], [51.83, 6.10]);
+        const map = L.map('map', { zoomControl: false, maxBounds: brabantBounds, maxBoundsViscosity: 1.0, minZoom: 9 }).setView([51.4827, 5.2322], 10);
+        L.control.zoom({ position: 'topleft' }).addTo(map);
+
+        L.tileLayer('https://{s}.basemaps.cartocdn.com/light_all/{z}/{x}/{y}{r}.png', { maxZoom: 20 }).addTo(map);
+
+        const parkIcon = L.divIcon({
+            html: `<div style="background-color: var(--primary-green); width: 24px; height: 24px; border-radius: 50%; border: 3px solid white; box-shadow: 0 2px 5px rgba(0,0,0,0.3);"></div>`,
+            className: '', iconSize: [24, 24], iconAnchor: [12, 12]
+        });
+
+        // The map now dynamically reads from the 'brabantParks' array in your other file!
+        brabantParks.forEach(park => {
+            const marker = L.marker(park.coords, { icon: parkIcon }).addTo(map);
+            marker.on('click', () => openPanel(park));
+        });
+
+        function openPanel(park) {
+            document.getElementById('parkName').innerText = park.name;
+            document.getElementById('parkLogistics').innerHTML = park.logistics;
+            document.getElementById('parkLink').href = park.link;
+            
+            const reviewsContainer = document.getElementById('parkReviews');
+            reviewsContainer.innerHTML = '';
+            park.reviews.forEach(review => {
+                const div = document.createElement('div');
+                div.className = 'review-card';
+                div.innerHTML = `"${review}"`;
+                reviewsContainer.appendChild(div);
+            });
+
+            document.getElementById('infoPanel').classList.add('active');
+            if (window.innerWidth > 768) {
+                map.setView(park.coords, 10, { animate: true, pan: { animate: true, duration: 0.5 } });
+            } else {
+                map.setView(park.coords, 10);
+            }
+        }
+
+        function closePanel() { document.getElementById('infoPanel').classList.remove('active'); }
+        function toggleChat() { document.getElementById('chatWindow').classList.toggle('active'); }
+    </script>
+</body>
+</html>
