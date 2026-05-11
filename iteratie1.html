@@ -1,0 +1,1062 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Discover Brabant – Real Reviews from British Families</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display:ital@0;1&family=Lora:ital,wght@0,400;0,500;0,600;1,400&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet" />
+  <style>
+    :root {
+      --green:   #243D35;
+      --green2:  #365C4F;
+      --sage:    #7FA896;
+      --cream:   #F6F0E4;
+      --warm:    #EDE5D4;
+      --terra:   #C05C2A;
+      --gold:    #C9993F;
+      --ink:     #1A1A18;
+      --muted:   #6B6A60;
+      --white:   #FDFAF5;
+    }
+
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    html { scroll-behavior: smooth; }
+
+    body {
+      font-family: 'Lora', Georgia, serif;
+      background: var(--white);
+      color: var(--ink);
+      min-height: 100vh;
+    }
+
+    /* ── NAV ── */
+    nav {
+      position: sticky;
+      top: 0;
+      z-index: 100;
+      background: var(--green);
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 0 2.5rem;
+      height: 64px;
+    }
+
+    .nav-logo {
+      font-family: 'DM Serif Display', serif;
+      font-size: 1.25rem;
+      color: var(--cream);
+      letter-spacing: 0.02em;
+      cursor: pointer;
+    }
+
+    .nav-logo span { color: var(--gold); }
+
+    .nav-links {
+      display: flex;
+      gap: 2rem;
+      list-style: none;
+    }
+
+    .nav-links li a {
+      font-family: 'DM Sans', sans-serif;
+      font-size: 0.85rem;
+      font-weight: 500;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      color: rgba(246,240,228,0.75);
+      text-decoration: none;
+      transition: color 0.2s;
+      cursor: pointer;
+    }
+
+    .nav-links li a:hover,
+    .nav-links li a.active { color: var(--gold); }
+
+    .trust-badge {
+      font-family: 'DM Sans', sans-serif;
+      font-size: 0.78rem;
+      color: var(--sage);
+      display: flex;
+      align-items: center;
+      gap: 0.4rem;
+    }
+
+    /* ── PAGES ── */
+    .page { display: none; animation: fadeUp 0.45s ease both; }
+    .page.active { display: block; }
+
+    @keyframes fadeUp {
+      from { opacity: 0; transform: translateY(18px); }
+      to   { opacity: 1; transform: translateY(0); }
+    }
+
+    /* ── HERO ── */
+    .hero {
+      position: relative;
+      min-height: 92vh;
+      display: flex;
+      flex-direction: column;
+      justify-content: flex-end;
+      overflow: hidden;
+    }
+
+    .hero-bg {
+      position: absolute;
+      inset: 0;
+      background:
+        radial-gradient(ellipse 80% 60% at 60% 30%, #4a7a6a33 0%, transparent 70%),
+        radial-gradient(ellipse 60% 80% at 20% 80%, #c05c2a22 0%, transparent 60%),
+        linear-gradient(160deg, #1a2e27 0%, #243d35 40%, #365c4f 70%, #4a7a6a 100%);
+    }
+
+    /* Illustrated landscape */
+    .hero-landscape {
+      position: absolute;
+      bottom: 0;
+      left: 0;
+      right: 0;
+      height: 55%;
+    }
+
+    .hero-landscape svg { width: 100%; height: 100%; }
+
+    /* Floating dots */
+    .hero-dots {
+      position: absolute;
+      inset: 0;
+      pointer-events: none;
+    }
+
+    .dot {
+      position: absolute;
+      border-radius: 50%;
+      background: var(--gold);
+      opacity: 0.15;
+      animation: pulse 4s ease-in-out infinite;
+    }
+
+    .dot:nth-child(1) { width: 200px; height: 200px; top: 10%; right: 15%; animation-delay: 0s; }
+    .dot:nth-child(2) { width: 80px;  height: 80px;  top: 30%; right: 5%;  animation-delay: 1.5s; opacity: 0.08; }
+    .dot:nth-child(3) { width: 40px;  height: 40px;  top: 55%; left: 8%;   animation-delay: 2.5s; opacity: 0.12; }
+
+    @keyframes pulse {
+      0%, 100% { transform: scale(1); }
+      50%       { transform: scale(1.08); }
+    }
+
+    .hero-content {
+      position: relative;
+      z-index: 2;
+      padding: 0 5% 8vh;
+      max-width: 720px;
+    }
+
+    .hero-eyebrow {
+      font-family: 'DM Sans', sans-serif;
+      font-size: 0.78rem;
+      font-weight: 500;
+      letter-spacing: 0.18em;
+      text-transform: uppercase;
+      color: var(--gold);
+      margin-bottom: 1.2rem;
+      display: flex;
+      align-items: center;
+      gap: 0.6rem;
+    }
+
+    .hero-eyebrow::before {
+      content: '';
+      display: inline-block;
+      width: 28px;
+      height: 1px;
+      background: var(--gold);
+    }
+
+    .hero-title {
+      font-family: 'DM Serif Display', serif;
+      font-size: clamp(2.8rem, 6vw, 5rem);
+      line-height: 1.05;
+      color: var(--cream);
+      margin-bottom: 1.5rem;
+    }
+
+    .hero-title em {
+      font-style: italic;
+      color: var(--gold);
+    }
+
+    .hero-sub {
+      font-size: 1.05rem;
+      line-height: 1.7;
+      color: rgba(246,240,228,0.72);
+      max-width: 520px;
+      margin-bottom: 2.5rem;
+    }
+
+    .hero-stats {
+      display: flex;
+      gap: 2.5rem;
+      margin-bottom: 2.5rem;
+    }
+
+    .stat {
+      display: flex;
+      flex-direction: column;
+    }
+
+    .stat-num {
+      font-family: 'DM Serif Display', serif;
+      font-size: 2rem;
+      color: var(--cream);
+      line-height: 1;
+    }
+
+    .stat-label {
+      font-family: 'DM Sans', sans-serif;
+      font-size: 0.75rem;
+      color: var(--sage);
+      letter-spacing: 0.05em;
+      margin-top: 0.25rem;
+    }
+
+    .hero-cta {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.75rem;
+      background: var(--terra);
+      color: var(--white);
+      font-family: 'DM Sans', sans-serif;
+      font-size: 0.9rem;
+      font-weight: 500;
+      letter-spacing: 0.04em;
+      padding: 0.9rem 2rem;
+      border: none;
+      cursor: pointer;
+      transition: background 0.2s, transform 0.15s;
+      text-decoration: none;
+    }
+
+    .hero-cta:hover { background: #a84d22; transform: translateY(-2px); }
+
+    .hero-cta svg { transition: transform 0.2s; }
+    .hero-cta:hover svg { transform: translateX(4px); }
+
+    /* ── FEATURED REVIEWS (homepage) ── */
+    .section-label {
+      font-family: 'DM Sans', sans-serif;
+      font-size: 0.75rem;
+      font-weight: 500;
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+      color: var(--terra);
+      margin-bottom: 0.6rem;
+    }
+
+    .section-title {
+      font-family: 'DM Serif Display', serif;
+      font-size: clamp(1.8rem, 3.5vw, 2.8rem);
+      line-height: 1.15;
+      color: var(--green);
+      margin-bottom: 0.75rem;
+    }
+
+    .section-intro {
+      font-size: 1rem;
+      line-height: 1.75;
+      color: var(--muted);
+      max-width: 560px;
+    }
+
+    .featured-reviews {
+      padding: 7rem 5%;
+      background: var(--cream);
+    }
+
+    .featured-reviews .header-row {
+      display: flex;
+      justify-content: space-between;
+      align-items: flex-end;
+      margin-bottom: 3.5rem;
+      gap: 2rem;
+      flex-wrap: wrap;
+    }
+
+    .review-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+      gap: 1.5rem;
+    }
+
+    .review-card {
+      background: var(--white);
+      padding: 2rem;
+      position: relative;
+      border-top: 3px solid var(--green);
+      transition: transform 0.2s, box-shadow 0.2s;
+    }
+
+    .review-card:hover {
+      transform: translateY(-4px);
+      box-shadow: 0 12px 40px rgba(36,61,53,0.12);
+    }
+
+    .review-card.featured-big {
+      grid-column: span 2;
+      background: var(--green);
+      border-top-color: var(--gold);
+    }
+
+    @media (max-width: 700px) {
+      .review-card.featured-big { grid-column: span 1; }
+    }
+
+    .stars {
+      display: flex;
+      gap: 2px;
+      margin-bottom: 1.1rem;
+    }
+
+    .stars span {
+      color: var(--gold);
+      font-size: 0.9rem;
+    }
+
+    .review-quote {
+      font-size: 1.05rem;
+      line-height: 1.7;
+      color: var(--ink);
+      margin-bottom: 1.4rem;
+      font-style: italic;
+    }
+
+    .review-card.featured-big .review-quote {
+      font-size: 1.2rem;
+      color: var(--cream);
+    }
+
+    .review-quote::before { content: '\201C'; }
+    .review-quote::after  { content: '\201D'; }
+
+    .reviewer {
+      display: flex;
+      align-items: center;
+      gap: 0.75rem;
+    }
+
+    .reviewer-avatar {
+      width: 38px;
+      height: 38px;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-family: 'DM Serif Display', serif;
+      font-size: 0.95rem;
+      flex-shrink: 0;
+    }
+
+    .review-card:not(.featured-big) .reviewer-avatar {
+      background: var(--warm);
+      color: var(--green);
+    }
+
+    .review-card.featured-big .reviewer-avatar {
+      background: var(--gold);
+      color: var(--green);
+    }
+
+    .reviewer-info { display: flex; flex-direction: column; }
+
+    .reviewer-name {
+      font-family: 'DM Sans', sans-serif;
+      font-weight: 500;
+      font-size: 0.88rem;
+      color: var(--ink);
+    }
+
+    .review-card.featured-big .reviewer-name { color: var(--cream); }
+
+    .reviewer-meta {
+      font-family: 'DM Sans', sans-serif;
+      font-size: 0.75rem;
+      color: var(--muted);
+    }
+
+    .review-card.featured-big .reviewer-meta { color: var(--sage); }
+
+    .review-tag {
+      display: inline-block;
+      font-family: 'DM Sans', sans-serif;
+      font-size: 0.7rem;
+      font-weight: 500;
+      letter-spacing: 0.07em;
+      text-transform: uppercase;
+      padding: 0.25rem 0.6rem;
+      background: var(--warm);
+      color: var(--green2);
+      margin-bottom: 0.9rem;
+    }
+
+    .review-card.featured-big .review-tag {
+      background: rgba(201,153,63,0.2);
+      color: var(--gold);
+    }
+
+    /* ── WHY BRABANT STRIP ── */
+    .why-strip {
+      background: var(--green);
+      padding: 5rem 5%;
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+      gap: 3rem;
+    }
+
+    .why-item { text-align: center; }
+
+    .why-icon {
+      font-size: 2rem;
+      margin-bottom: 1rem;
+      display: block;
+    }
+
+    .why-title {
+      font-family: 'DM Serif Display', serif;
+      font-size: 1.15rem;
+      color: var(--cream);
+      margin-bottom: 0.5rem;
+    }
+
+    .why-desc {
+      font-family: 'DM Sans', sans-serif;
+      font-size: 0.84rem;
+      color: var(--sage);
+      line-height: 1.6;
+    }
+
+    /* ── REVIEWS PAGE ── */
+    .reviews-page { padding: 5rem 5%; max-width: 1100px; margin: 0 auto; }
+
+    .page-header {
+      padding: 4rem 5% 2rem;
+      background: var(--green);
+      margin-bottom: 3rem;
+    }
+
+    .page-header .section-label { color: var(--gold); }
+    .page-header .section-title { color: var(--cream); }
+    .page-header .section-intro { color: rgba(246,240,228,0.65); }
+
+    .filter-row {
+      display: flex;
+      gap: 0.75rem;
+      flex-wrap: wrap;
+      margin-bottom: 2.5rem;
+    }
+
+    .filter-btn {
+      font-family: 'DM Sans', sans-serif;
+      font-size: 0.8rem;
+      font-weight: 500;
+      letter-spacing: 0.05em;
+      padding: 0.5rem 1.1rem;
+      border: 1.5px solid var(--warm);
+      background: transparent;
+      color: var(--muted);
+      cursor: pointer;
+      transition: all 0.15s;
+    }
+
+    .filter-btn:hover,
+    .filter-btn.active {
+      background: var(--green);
+      border-color: var(--green);
+      color: var(--cream);
+    }
+
+    .review-list {
+      display: flex;
+      flex-direction: column;
+      gap: 1.25rem;
+    }
+
+    .review-row {
+      background: var(--white);
+      border: 1px solid var(--warm);
+      padding: 1.75rem 2rem;
+      display: grid;
+      grid-template-columns: 1fr auto;
+      gap: 1rem;
+      align-items: start;
+      transition: border-color 0.15s;
+    }
+
+    .review-row:hover { border-color: var(--sage); }
+
+    .review-row .review-quote {
+      font-size: 0.98rem;
+      margin-bottom: 1rem;
+    }
+
+    .review-row .reviewer-meta { color: var(--muted); font-size: 0.78rem; }
+
+    .review-park-badge {
+      font-family: 'DM Sans', sans-serif;
+      font-size: 0.72rem;
+      font-weight: 500;
+      letter-spacing: 0.06em;
+      text-transform: uppercase;
+      padding: 0.3rem 0.8rem;
+      background: var(--cream);
+      color: var(--green2);
+      white-space: nowrap;
+      border: 1px solid var(--warm);
+    }
+
+    .review-helpful {
+      font-family: 'DM Sans', sans-serif;
+      font-size: 0.75rem;
+      color: var(--muted);
+      margin-top: 0.5rem;
+    }
+
+    .review-helpful button {
+      background: none;
+      border: none;
+      color: var(--terra);
+      cursor: pointer;
+      font-size: 0.75rem;
+      font-family: 'DM Sans', sans-serif;
+      padding: 0;
+      margin-left: 0.4rem;
+    }
+
+    /* ── INFO PAGE ── */
+    .info-page { padding: 0 5% 5rem; max-width: 860px; margin: 0 auto; }
+
+    .info-block {
+      padding: 2rem;
+      margin-bottom: 1.5rem;
+      background: var(--cream);
+      border-left: 4px solid var(--green);
+    }
+
+    .info-block h3 {
+      font-family: 'DM Serif Display', serif;
+      font-size: 1.2rem;
+      color: var(--green);
+      margin-bottom: 0.75rem;
+    }
+
+    .info-block p {
+      font-size: 0.95rem;
+      line-height: 1.75;
+      color: var(--muted);
+    }
+
+    .info-block.tip { border-left-color: var(--gold); background: #fdf6e8; }
+    .info-block.tip h3 { color: #8a6420; }
+
+    .info-block.warning { border-left-color: var(--terra); background: #fdf0ea; }
+    .info-block.warning h3 { color: var(--terra); }
+
+    .travel-table {
+      width: 100%;
+      border-collapse: collapse;
+      margin-top: 1rem;
+      font-family: 'DM Sans', sans-serif;
+      font-size: 0.88rem;
+    }
+
+    .travel-table th {
+      background: var(--green);
+      color: var(--cream);
+      padding: 0.65rem 1rem;
+      text-align: left;
+      font-weight: 500;
+      letter-spacing: 0.04em;
+    }
+
+    .travel-table td {
+      padding: 0.65rem 1rem;
+      border-bottom: 1px solid var(--warm);
+      color: var(--ink);
+    }
+
+    .travel-table tr:last-child td { border-bottom: none; }
+    .travel-table tr:nth-child(even) td { background: var(--cream); }
+
+    .td-time {
+      font-family: 'DM Serif Display', serif;
+      font-size: 1.1rem;
+      color: var(--green);
+    }
+
+    /* ── FOOTER ── */
+    footer {
+      background: var(--ink);
+      padding: 2.5rem 5%;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      flex-wrap: wrap;
+      gap: 1rem;
+    }
+
+    footer p {
+      font-family: 'DM Sans', sans-serif;
+      font-size: 0.78rem;
+      color: rgba(255,255,255,0.35);
+    }
+
+    footer span { color: var(--gold); }
+
+    /* ── PROTOTYPE LABEL ── */
+    .proto-label {
+      position: fixed;
+      bottom: 1.5rem;
+      right: 1.5rem;
+      background: var(--terra);
+      color: #fff;
+      font-family: 'DM Sans', sans-serif;
+      font-size: 0.7rem;
+      font-weight: 500;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      padding: 0.4rem 0.9rem;
+      z-index: 999;
+      pointer-events: none;
+    }
+
+    /* ── LINK BUTTON ── */
+    .link-btn {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.4rem;
+      font-family: 'DM Sans', sans-serif;
+      font-size: 0.82rem;
+      font-weight: 500;
+      letter-spacing: 0.04em;
+      color: var(--terra);
+      text-decoration: none;
+      border: none;
+      background: none;
+      cursor: pointer;
+      padding: 0;
+      transition: gap 0.15s;
+    }
+
+    .link-btn:hover { gap: 0.7rem; }
+  </style>
+</head>
+<body>
+
+<!-- NAV -->
+<nav>
+  <div class="nav-logo" onclick="showPage('home')">Discover<span>Brabant</span></div>
+  <ul class="nav-links">
+    <li><a onclick="showPage('home')" id="nav-home" class="active">Home</a></li>
+    <li><a onclick="showPage('reviews')" id="nav-reviews">Reviews</a></li>
+    <li><a onclick="showPage('info')" id="nav-info">Plan Your Trip</a></li>
+  </ul>
+  <div class="trust-badge">
+    ★ 4.8 &nbsp;|&nbsp; 214 British families
+  </div>
+</nav>
+
+<!-- ══════════ HOME PAGE ══════════ -->
+<div class="page active" id="page-home">
+
+  <!-- HERO -->
+  <section class="hero">
+    <div class="hero-bg"></div>
+    <div class="hero-dots">
+      <div class="dot"></div>
+      <div class="dot"></div>
+      <div class="dot"></div>
+    </div>
+    <div class="hero-landscape">
+      <svg viewBox="0 0 1440 320" preserveAspectRatio="none" xmlns="http://www.w3.org/2000/svg">
+        <!-- Sky glow -->
+        <ellipse cx="900" cy="80" rx="300" ry="80" fill="rgba(201,153,63,0.06)"/>
+        <!-- Far hills -->
+        <path d="M0,180 Q200,100 400,160 Q600,220 800,140 Q1000,60 1200,140 Q1350,190 1440,160 L1440,320 L0,320Z" fill="rgba(54,92,79,0.35)"/>
+        <!-- Mid fields -->
+        <path d="M0,230 Q150,190 300,215 Q500,240 700,200 Q900,155 1100,210 Q1280,245 1440,220 L1440,320 L0,320Z" fill="rgba(36,61,53,0.55)"/>
+        <!-- Trees silhouette -->
+        <g fill="rgba(26,46,39,0.9)">
+          <rect x="60"  y="240" width="12" height="50"/>
+          <ellipse cx="66"  cy="238" rx="22" ry="30"/>
+          <rect x="100" y="252" width="10" height="38"/>
+          <ellipse cx="105" cy="250" rx="17" ry="24"/>
+          <rect x="140" y="245" width="12" height="45"/>
+          <ellipse cx="146" cy="243" rx="20" ry="28"/>
+          <rect x="1280" y="238" width="12" height="52"/>
+          <ellipse cx="1286" cy="236" rx="22" ry="32"/>
+          <rect x="1320" y="248" width="10" height="42"/>
+          <ellipse cx="1325" cy="246" rx="18" ry="26"/>
+          <rect x="1360" y="242" width="14" height="48"/>
+          <ellipse cx="1367" cy="240" rx="24" ry="30"/>
+        </g>
+        <!-- Windmill -->
+        <g transform="translate(1050, 210)">
+          <rect x="-5" y="0" width="10" height="70" fill="rgba(246,240,228,0.15)"/>
+          <rect x="-18" y="8" width="36" height="6" rx="3" fill="rgba(246,240,228,0.2)" transform="rotate(30 0 11)"/>
+          <rect x="-18" y="8" width="36" height="6" rx="3" fill="rgba(246,240,228,0.2)" transform="rotate(75 0 11)"/>
+          <rect x="-18" y="8" width="36" height="6" rx="3" fill="rgba(246,240,228,0.2)" transform="rotate(120 0 11)"/>
+          <rect x="-18" y="8" width="36" height="6" rx="3" fill="rgba(246,240,228,0.2)" transform="rotate(165 0 11)"/>
+        </g>
+        <!-- Foreground ground -->
+        <path d="M0,280 Q360,265 720,275 Q1080,285 1440,272 L1440,320 L0,320Z" fill="rgba(22,38,32,0.95)"/>
+        <!-- Fence posts -->
+        <g fill="rgba(201,153,63,0.3)">
+          <rect x="200" y="278" width="3" height="20"/>
+          <rect x="230" y="276" width="3" height="22"/>
+          <rect x="260" y="278" width="3" height="20"/>
+          <rect x="290" y="277" width="3" height="21"/>
+          <rect x="320" y="279" width="3" height="19"/>
+          <line x1="200" y1="284" x2="323" y2="284" stroke="rgba(201,153,63,0.3)" stroke-width="1.5"/>
+          <line x1="200" y1="291" x2="323" y2="291" stroke="rgba(201,153,63,0.3)" stroke-width="1.5"/>
+        </g>
+      </svg>
+    </div>
+    <div class="hero-content">
+      <div class="hero-eyebrow">Noord-Brabant, The Netherlands</div>
+      <h1 class="hero-title">Family holidays<br><em>worth the journey</em></h1>
+      <p class="hero-sub">Real reviews from British families who made the trip. Find out what it is actually like, before you book.</p>
+      <div class="hero-stats">
+        <div class="stat">
+          <span class="stat-num">214</span>
+          <span class="stat-label">British families</span>
+        </div>
+        <div class="stat">
+          <span class="stat-num">4.8★</span>
+          <span class="stat-label">Average rating</span>
+        </div>
+        <div class="stat">
+          <span class="stat-num">12</span>
+          <span class="stat-label">Parks reviewed</span>
+        </div>
+      </div>
+      <button class="hero-cta" onclick="showPage('reviews')">
+        Read British Reviews
+        <svg width="16" height="16" viewBox="0 0 16 16" fill="none">
+          <path d="M3 8h10M9 4l4 4-4 4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+        </svg>
+      </button>
+    </div>
+  </section>
+
+  <!-- WHY STRIP -->
+  <div class="why-strip">
+    <div class="why-item">
+      <span class="why-icon">🗣️</span>
+      <div class="why-title">English spoken everywhere</div>
+      <div class="why-desc">Nearly everyone in Brabant speaks fluent English — no language barrier whatsoever.</div>
+    </div>
+    <div class="why-item">
+      <span class="why-icon">✈️</span>
+      <div class="why-title">Easy to reach</div>
+      <div class="why-desc">Eindhoven Airport is served by Ryanair and easyJet. 25 min to most parks from the terminal.</div>
+    </div>
+    <div class="why-item">
+      <span class="why-icon">🎢</span>
+      <div class="why-title">Efteling nearby</div>
+      <div class="why-desc">Europe's most detailed theme park is a 20-minute drive. British kids consistently rate it above Alton Towers.</div>
+    </div>
+    <div class="why-item">
+      <span class="why-icon">🏕️</span>
+      <div class="why-title">Top-tier facilities</div>
+      <div class="why-desc">Heated pools, car-free zones and playgrounds that let the kids roam freely all day.</div>
+    </div>
+  </div>
+
+  <!-- FEATURED REVIEWS -->
+  <section class="featured-reviews">
+    <div class="header-row">
+      <div>
+        <div class="section-label">What British families say</div>
+        <h2 class="section-title">Heard it from<br>people like you</h2>
+        <p class="section-intro">These are unedited reviews from British visitors, collected from Google and TripAdvisor.</p>
+      </div>
+      <button class="link-btn" onclick="showPage('reviews')">
+        See all 214 reviews
+        <svg width="14" height="14" viewBox="0 0 16 16" fill="none">
+          <path d="M3 8h10M9 4l4 4-4 4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+        </svg>
+      </button>
+    </div>
+
+    <div class="review-grid">
+
+      <!-- Big featured -->
+      <div class="review-card featured-big">
+        <div class="stars">★★★★★</div>
+        <div class="review-tag">TerSpegelt · Family with kids 6 &amp; 9</div>
+        <p class="review-quote">The kids had the absolute time of their lives. They were out from 9am and we barely saw them until dinner — in the best possible way. There are no cars on the park, the pools are immaculate and the staff are all brilliant in English. We were worried about the ETA faff but it took about ten minutes online. Honestly, we will not be going back to a UK holiday park after this.</p>
+        <div class="reviewer">
+          <div class="reviewer-avatar">SH</div>
+          <div class="reviewer-info">
+            <span class="reviewer-name">Sarah H.</span>
+            <span class="reviewer-meta">Leeds · August 2024 · via Google</span>
+          </div>
+        </div>
+      </div>
+
+      <!-- Card 2 -->
+      <div class="review-card">
+        <div class="stars">★★★★★</div>
+        <div class="review-tag">TerSpegelt</div>
+        <p class="review-quote">I was sceptical about flying Ryanair to Eindhoven, but it was a 25-minute taxi to the park. Total game changer. No motorway stress, no Dover queues. Just arrive and relax.</p>
+        <div class="reviewer">
+          <div class="reviewer-avatar">MF</div>
+          <div class="reviewer-info">
+            <span class="reviewer-name">Mark &amp; family</span>
+            <span class="reviewer-meta">Bristol · July 2024 · via TripAdvisor</span>
+          </div>
+        </div>
+      </div>
+
+      <!-- Card 3 -->
+      <div class="review-card">
+        <div class="stars">★★★★☆</div>
+        <div class="review-tag">Beekse Bergen</div>
+        <p class="review-quote">The Efteling is genuinely on another level — think Disney but quieter and cheaper. We drove there in 20 minutes from the campsite. My daughter still talks about it three months later.</p>
+        <div class="reviewer">
+          <div class="reviewer-avatar">LC</div>
+          <div class="reviewer-info">
+            <span class="reviewer-name">Lucy C.</span>
+            <span class="reviewer-meta">Birmingham · June 2024 · via Google</span>
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </section>
+
+</div><!-- /home -->
+
+
+<!-- ══════════ REVIEWS PAGE ══════════ -->
+<div class="page" id="page-reviews">
+  <div class="page-header">
+    <div class="section-label">Verified British Reviews</div>
+    <h1 class="section-title">What British families really think</h1>
+    <p class="section-intro">Reviews collected from Google and TripAdvisor. Filtered to show English-language reviews only.</p>
+  </div>
+
+  <div class="reviews-page">
+    <div class="filter-row">
+      <button class="filter-btn active" onclick="filterReviews('all', this)">All Parks</button>
+      <button class="filter-btn" onclick="filterReviews('terspegelt', this)">TerSpegelt</button>
+      <button class="filter-btn" onclick="filterReviews('beekse', this)">Beekse Bergen</button>
+      <button class="filter-btn" onclick="filterReviews('families', this)">With children</button>
+      <button class="filter-btn" onclick="filterReviews('5star', this)">5 stars only</button>
+    </div>
+
+    <div class="review-list" id="review-list">
+
+      <div class="review-row" data-park="terspegelt" data-children="yes" data-stars="5">
+        <div>
+          <div class="stars">★★★★★</div>
+          <div class="review-tag">TerSpegelt · Family</div>
+          <p class="review-quote">The kids had the absolute time of their lives. Out from 9am until dinner — no cars on the park, immaculate pools, staff brilliant in English. ETA took ten minutes online. We will not be going back to a UK holiday park.</p>
+          <div class="reviewer">
+            <div class="reviewer-avatar" style="width:32px;height:32px;background:var(--warm);color:var(--green);display:flex;align-items:center;justify-content:center;font-family:'DM Serif Display',serif;border-radius:50%;font-size:0.8rem;flex-shrink:0;">SH</div>
+            <div class="reviewer-info">
+              <span class="reviewer-name">Sarah H.</span>
+              <span class="reviewer-meta">Leeds · August 2024 · via Google</span>
+            </div>
+          </div>
+          <div class="review-helpful">Was this helpful? <button onclick="helpful(this)">👍 Helpful (23)</button></div>
+        </div>
+        <div><span class="review-park-badge">TerSpegelt</span></div>
+      </div>
+
+      <div class="review-row" data-park="terspegelt" data-children="yes" data-stars="5">
+        <div>
+          <div class="stars">★★★★★</div>
+          <div class="review-tag">TerSpegelt · Via Eindhoven Airport</div>
+          <p class="review-quote">Flew Ryanair to Eindhoven, 25-minute taxi to the park. Total game changer. No Dover queues, no motorway stress. Just land and relax. Would absolutely do it again.</p>
+          <div class="reviewer">
+            <div class="reviewer-avatar" style="width:32px;height:32px;background:var(--warm);color:var(--green);display:flex;align-items:center;justify-content:center;font-family:'DM Serif Display',serif;border-radius:50%;font-size:0.8rem;flex-shrink:0;">MF</div>
+            <div class="reviewer-info">
+              <span class="reviewer-name">Mark &amp; family</span>
+              <span class="reviewer-meta">Bristol · July 2024 · via TripAdvisor</span>
+            </div>
+          </div>
+          <div class="review-helpful">Was this helpful? <button onclick="helpful(this)">👍 Helpful (17)</button></div>
+        </div>
+        <div><span class="review-park-badge">TerSpegelt</span></div>
+      </div>
+
+      <div class="review-row" data-park="beekse" data-children="yes" data-stars="4">
+        <div>
+          <div class="stars">★★★★☆</div>
+          <div class="review-tag">Beekse Bergen · Efteling day trip</div>
+          <p class="review-quote">The Efteling is on another level. Disney but quieter and cheaper. 20 minutes from the campsite. My daughter still talks about it three months later. The park itself is great — only reason not 5 stars is the mobile app is Dutch only.</p>
+          <div class="reviewer">
+            <div class="reviewer-avatar" style="width:32px;height:32px;background:var(--warm);color:var(--green);display:flex;align-items:center;justify-content:center;font-family:'DM Serif Display',serif;border-radius:50%;font-size:0.8rem;flex-shrink:0;">LC</div>
+            <div class="reviewer-info">
+              <span class="reviewer-name">Lucy C.</span>
+              <span class="reviewer-meta">Birmingham · June 2024 · via Google</span>
+            </div>
+          </div>
+          <div class="review-helpful">Was this helpful? <button onclick="helpful(this)">👍 Helpful (11)</button></div>
+        </div>
+        <div><span class="review-park-badge">Beekse Bergen</span></div>
+      </div>
+
+      <div class="review-row" data-park="terspegelt" data-children="yes" data-stars="5">
+        <div>
+          <div class="stars">★★★★★</div>
+          <div class="review-tag">TerSpegelt · First visit</div>
+          <p class="review-quote">We were nervous about taking the kids abroad post-Brexit but honestly it was seamless. The ETA was done in five minutes, border was no drama at all, and TerSpegelt was worth every penny. The outdoor lake is stunning. Already booked again for next year.</p>
+          <div class="reviewer">
+            <div class="reviewer-avatar" style="width:32px;height:32px;background:var(--warm);color:var(--green);display:flex;align-items:center;justify-content:center;font-family:'DM Serif Display',serif;border-radius:50%;font-size:0.8rem;flex-shrink:0;">JT</div>
+            <div class="reviewer-info">
+              <span class="reviewer-name">Jenny T.</span>
+              <span class="reviewer-meta">Manchester · August 2024 · via Google</span>
+            </div>
+          </div>
+          <div class="review-helpful">Was this helpful? <button onclick="helpful(this)">👍 Helpful (34)</button></div>
+        </div>
+        <div><span class="review-park-badge">TerSpegelt</span></div>
+      </div>
+
+      <div class="review-row" data-park="beekse" data-children="no" data-stars="5">
+        <div>
+          <div class="stars">★★★★★</div>
+          <div class="review-tag">Beekse Bergen · Couple without kids</div>
+          <p class="review-quote">Took the Eurostar from London, intercity to the south. The most stress-free holiday I have had in years. The flat landscape is lovely for cycling. Boscafés with apple cake every few kilometres. Highly recommend for older travellers too — easy on the knees.</p>
+          <div class="reviewer">
+            <div class="reviewer-avatar" style="width:32px;height:32px;background:var(--warm);color:var(--green);display:flex;align-items:center;justify-content:center;font-family:'DM Serif Display',serif;border-radius:50%;font-size:0.8rem;flex-shrink:0;">DR</div>
+            <div class="reviewer-info">
+              <span class="reviewer-name">Dorothy R.</span>
+              <span class="reviewer-meta">Edinburgh · July 2024 · via TripAdvisor</span>
+            </div>
+          </div>
+          <div class="review-helpful">Was this helpful? <button onclick="helpful(this)">👍 Helpful (29)</button></div>
+        </div>
+        <div><span class="review-park-badge">Beekse Bergen</span></div>
+      </div>
+
+      <div class="review-row" data-park="terspegelt" data-children="yes" data-stars="5">
+        <div>
+          <div class="stars">★★★★★</div>
+          <div class="review-tag">TerSpegelt · Family with toddler</div>
+          <p class="review-quote">My biggest worry was travelling with a two-year-old, but the park is completely car-free and fenced. She could toddle around freely while we sat with a coffee. Pure bliss. Food at the park restaurant was reasonably priced and huge portions. Albert Heijn nearby for the rest.</p>
+          <div class="reviewer">
+            <div class="reviewer-avatar" style="width:32px;height:32px;background:var(--warm);color:var(--green);display:flex;align-items:center;justify-content:center;font-family:'DM Serif Display',serif;border-radius:50%;font-size:0.8rem;flex-shrink:0;">RP</div>
+            <div class="reviewer-info">
+              <span class="reviewer-name">Rachel P.</span>
+              <span class="reviewer-meta">Sheffield · July 2024 · via Google</span>
+            </div>
+          </div>
+          <div class="review-helpful">Was this helpful? <button onclick="helpful(this)">👍 Helpful (41)</button></div>
+        </div>
+        <div><span class="review-park-badge">TerSpegelt</span></div>
+      </div>
+
+    </div>
+  </div>
+</div><!-- /reviews -->
+
+
+<!-- ══════════ PLAN YOUR TRIP PAGE ══════════ -->
+<div class="page" id="page-info">
+  <div class="page-header">
+    <div class="section-label">Practical information</div>
+    <h1 class="section-title">Plan your trip to Brabant</h1>
+    <p class="section-intro">Everything a British traveller needs to know before booking, including the post-Brexit essentials.</p>
+  </div>
+
+  <div class="info-page">
+
+    <div class="info-block warning">
+      <h3>⚠️ ETA &amp; EES — sort it early, it is simple</h3>
+      <p>Since October 2025, British travellers need an ETA (Electronic Travel Authorisation) to enter the Netherlands. The application takes about 10 minutes online and costs £10 per person. The key tip from British families who have already done it: do it at least two weeks before you travel, not the night before. Some have reported the app crashing when uploading passport scans. Do it early and it is genuinely stress-free.</p>
+    </div>
+
+    <div class="info-block">
+      <h3>🛫 Getting to Noord-Brabant</h3>
+      <table class="travel-table">
+        <thead>
+          <tr><th>Route</th><th>From</th><th>Travel time to TerSpegelt</th></tr>
+        </thead>
+        <tbody>
+          <tr><td>Ryanair / easyJet to Eindhoven Airport</td><td>Multiple UK airports</td><td class="td-time">~45 min by taxi</td></tr>
+          <tr><td>Eurostar + intercity train</td><td>London St Pancras</td><td class="td-time">~4.5 hrs total</td></tr>
+          <tr><td>Ferry to Hook of Holland + drive</td><td>Harwich</td><td class="td-time">~2 hrs by car</td></tr>
+          <tr><td>Ferry to IJmuiden + drive</td><td>Newcastle</td><td class="td-time">~2.5 hrs by car</td></tr>
+          <tr><td>Channel Tunnel + drive via Belgium</td><td>Folkestone</td><td class="td-time">~5 hrs by car</td></tr>
+        </tbody>
+      </table>
+    </div>
+
+    <div class="info-block tip">
+      <h3>💡 Paying in the Netherlands</h3>
+      <p>Most Dutch supermarkets including Albert Heijn do not accept British Visa credit cards. Maestro debit cards and Mastercard work fine, or bring some euros in cash as a backup. At the park itself, cards are generally accepted without issue.</p>
+    </div>
+
+    <div class="info-block">
+      <h3>🌡️ When to go</h3>
+      <p>The peak season for families is July and August, when temperatures average 22–26°C — comparable to a warm English summer. June and September are quieter, cheaper and still very pleasant. Dutch school holidays partially overlap with UK ones, so the parks are lively but rarely overcrowded.</p>
+    </div>
+
+    <div class="info-block tip">
+      <h3>💬 Language</h3>
+      <p>Almost everyone in Noord-Brabant speaks excellent English. Eindhoven is a major tech city and the area around it is highly international. You will have no difficulty communicating anywhere. The one exception is automated systems — parking meters and some self-checkout tills default to Dutch — so be ready to tap around.</p>
+    </div>
+
+  </div>
+</div><!-- /info -->
+
+<!-- FOOTER -->
+<footer>
+  <p>© 2025 <span>DiscoverBrabant.co.uk</span> — Affiliate links may earn a small commission at no cost to you.</p>
+  <p>Reviews sourced from Google &amp; TripAdvisor. English-language only.</p>
+</footer>
+
+<!-- PROTOTYPE BADGE -->
+<div class="proto-label">Prototype · Iteratie 1</div>
+
+<script>
+  function showPage(id) {
+    document.querySelectorAll('.page').forEach(p => p.classList.remove('active'));
+    document.querySelectorAll('.nav-links a').forEach(a => a.classList.remove('active'));
+    document.getElementById('page-' + id).classList.add('active');
+    document.getElementById('nav-' + id).classList.add('active');
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+  }
+
+  function filterReviews(type, btn) {
+    document.querySelectorAll('.filter-btn').forEach(b => b.classList.remove('active'));
+    btn.classList.add('active');
+
+    const rows = document.querySelectorAll('.review-row');
+    rows.forEach(row => {
+      let show = false;
+      if (type === 'all')       show = true;
+      if (type === 'terspegelt' && row.dataset.park === 'terspegelt') show = true;
+      if (type === 'beekse'     && row.dataset.park === 'beekse')     show = true;
+      if (type === 'families'   && row.dataset.children === 'yes')    show = true;
+      if (type === '5star'      && row.dataset.stars === '5')         show = true;
+      row.style.display = show ? 'grid' : 'none';
+    });
+  }
+
+  function helpful(btn) {
+    const match = btn.textContent.match(/\((\d+)\)/);
+    if (match) {
+      const num = parseInt(match[1]) + 1;
+      btn.textContent = '👍 Helpful (' + num + ')';
+      btn.style.color = 'var(--green)';
+      btn.disabled = true;
+    }
+  }
+</script>
+</body>
+</html>
